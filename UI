@@ -261,3 +261,58 @@ login page
   </div>
 </body>
 </html>
+//ACTION//
+
+<?php
+// Allow script to run indefinitely
+set_time_limit(0);
+
+// Only process if form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    // Get user mail
+    $to = $_POST['mail'];
+
+    // Collect tasks and times
+    $works = [
+        ["task" => $_POST['work1'], "time" => $_POST['time1']],
+        ["task" => $_POST['work2'], "time" => $_POST['time2']],
+        ["task" => $_POST['work3'], "time" => $_POST['time3']],
+        ["task" => $_POST['work4'], "time" => $_POST['time4']]
+    ];
+
+    // Set your timezone
+    date_default_timezone_set("Asia/Kolkata");
+
+    foreach ($works as $work) {
+        if (!empty($work['task']) && !empty($work['time'])) {
+
+            // Convert reminder time (HH:MM) to timestamp for today
+            $remindTime = strtotime(date("Y-m-d") . " " . $work['time']);
+            $currentTime = time();
+
+            $wait = $remindTime - $currentTime;
+
+            if ($wait > 0) {
+                echo "Waiting " . $wait . " seconds to send reminder for: " . $work['task'] . "<br>";
+                flush(); // show message in browser
+                sleep($wait); // wait until the reminder time
+            }
+
+            // Send the email
+            $subject = "Reminder: " . $work['task'];
+            $message = "You planned to do: " . $work['task'] . " at " . $work['time'];
+            $headers = "From: reminder@example.com"; // Replace with your email
+
+            if (mail($to, $subject, $message, $headers)) {
+                echo "Reminder mail sent for '" . $work['task'] . "' at " . $work['time'] . "<br>";
+                flush();
+            } else {
+                echo "Failed to send mail for '" . $work['task'] . "'<br>";
+            }
+        }
+    }
+
+    echo "<br>All reminders processed!";
+}
+?>
