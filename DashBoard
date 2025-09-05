@@ -1,0 +1,78 @@
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // match form field names (they are case-sensitive too)
+    $username = $_POST['Username'] ?? "";
+    $address  = $_POST['address'] ?? "";
+    $country  = $_POST['Country'] ?? "";
+    $password = $_POST['password'] ?? "";
+}
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Account Details</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #f0f4f7;
+        }
+        .container {
+            width: 500px;
+            margin: 50px auto;
+            border: 2px solid #444;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+        }
+        h2 { color: #333; }
+        .details { margin-top: 20px; }
+        .details p { font-size: 16px; margin: 8px 0; }
+        .login-box {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ef2222ff;
+            background: #e6f2ff;
+            border-radius: 8px;
+        }
+        .login-box h3 {
+            margin-top: 0;
+            color: #f03232ff;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            background: #d23e3eff;
+            color: white;
+            font-weight: bold;
+        }
+        .btn:hover { background: #218838; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Account Created Successfully ✅</h2>
+        <div class="details">
+            <p><b>Address:</b> <?php echo htmlspecialchars($address); ?></p>
+            <p><b>Country:</b> <?php echo htmlspecialchars($country); ?></p>
+        </div>
+
+        <div class="login-box">
+            <h3>Login Details</h3>
+            <p><b>Username:</b> <?php echo htmlspecialchars($username); ?></p>
+            <p><b>Password:</b> <?php echo htmlspecialchars($password); ?></p>
+        </div>
+
+        <a href="loggingpage.html" class="btn">Go to Login</a>
+    </div>
+</body>
+</html>
